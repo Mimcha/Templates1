@@ -4,16 +4,29 @@ package org.example;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Person mom = new PersonBuilder()
+                .setName("Анна")
+                .setSurname("Вольф")
+                .setAge(31)
+                .setAddress("Сидней")
+                .build();
+        Person son = mom.newChildBuilder()
+                .setName("Антошка")
+                .build();
+        System.out.println("У " + mom + " есть сын, " + son);
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        try {
+            // Не хватает обяхательных полей
+            new PersonBuilder().build();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        try {
+            // Возраст недопустимый
+            new PersonBuilder().setAge(-100).build();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
     }
 }
